@@ -338,6 +338,22 @@
 			</div>
 		{{end}}
 		{{if .Repository.IsTimetrackerEnabled}}
+			<!-- Estimated time -->
+			<div class="ui divider"></div>
+			<div
+				class="ui {{if or (not .HasIssuesOrPullsWritePermission) .Repository.IsArchived}}disabled{{end}} floating jump estimated-time-modify">
+				<a class="text df ac muted">
+					<strong>{{.locale.Tr "repo.issues.estimated_time"}}</strong>
+				</a>
+			</div>
+			<div class="ui estimated-time list">
+				{{if eq .Issue.EstimatedTime 0}}
+					<span class="no-estimated-time item">{{.locale.Tr "repo.issues.any_estimated_time"}}</span>
+				{{else}}
+					<span class="duration-estimated-time item">{{.Issue.EstimatedTime | Sec2Time | Safe}}</span>
+				{{end}}
+			</div>
+
 			{{if and .CanUseTimetracker (not .Repository.IsArchived)}}
 				<div class="ui divider"></div>
 				<div class="ui timetrack">
